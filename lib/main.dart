@@ -1,8 +1,15 @@
-import 'package:flutter/material.dart';
+import 'dart:ui';
 
-import 'home.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:new_year/scroll_toggle_switcher.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+        statusBarColor: Colors.pinkAccent,
+        statusBarIconBrightness: Brightness.dark),
+  );
   runApp(const MyApp());
 }
 
@@ -15,12 +22,21 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
+      scrollBehavior: CustomScrollBehaviour(),
       theme: ThemeData(
         fontFamily: 'Akira',
         textTheme: const TextTheme(),
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.pink,
       ),
-      home: const Home(),
+      home: const ScrollToggleSwitcher(),
     );
   }
+}
+
+class CustomScrollBehaviour extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+      };
 }
